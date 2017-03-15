@@ -33,7 +33,7 @@
         const d3 = this.$d3;
         //console.log(d3.voronoi());
         var img = new Image;
-        img.src = "./harold.jpg";
+        img.src = "https://raw.githubusercontent.com/asm-jaime/vue-d3-gallery/master/docs/harold.jpg";
 
         var canvas = d3.select("canvas").on("touchmove mousemove", moved).node(),
           context = canvas.getContext("2d"),
@@ -62,29 +62,27 @@
           context.clearRect(0, 0, width, height);
           context.beginPath();
           drawCell(polygons[0]);
-          context.fillStyle = "#f00";
-          context.fill();
 
-          context.beginPath();
           for (var i = 0, n = polygons.length; i < n; ++i){
+            context.save();
             drawCell(polygons[i]);
+            context.clip();
+            context.drawImage(img, polygons[i].data[0]-64, polygons[i].data[1]-64);
+            context.stroke();
+            context.restore();
           }
           context.strokeStyle = "#00f";
           context.stroke();
         }
 
         function drawCell(cell) {
-          context.save();
           if (!cell) return false;
+          context.beginPath();
           context.moveTo(cell[0][0], cell[0][1]);
           for (var j = 1, m = cell.length; j < m; ++j) {
             context.lineTo(cell[j][0], cell[j][1]);
           }
           context.closePath();
-          context.clip();
-          context.drawImage(img, cell[0][0] - 90, cell[0][1] - 115);
-          context.stroke();
-          context.restore();
           return true;
         }
       }, // }}}

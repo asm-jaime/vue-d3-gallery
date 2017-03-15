@@ -26699,7 +26699,7 @@
 	
 	
 	// module
-	exports.push([module.id, "\nhtml,\nbody {\n}\n.main-panel {\n  width: 100%;\n  /*position: absolute;*/\n  z-index: 2;\n}\n", "", {"version":3,"sources":["/./src/components/page-yobanoi.vue?5fa07bdc"],"names":[],"mappings":";AAyGA;;CAEA;AACA;EACA,YAAA;EACA,uBAAA;EACA,WAAA;CACA","file":"page-yobanoi.vue","sourcesContent":["<template>\n  <div id=\"app\">\n    <div class=\"container\">\n      <h1>gallery</h1>\n      <b-button-group>\n        <b-button @click=\"minusNode\">\n          <span class=\"fa fa-minus\"></span>\n        </b-button>\n        <input type=\"text\" class=\"form-control input-number\" :value=\"nodes\" min=\"1\" max=\"100\">\n        <b-button @click=\"plusNode\">\n          <span class=\"fa fa-plus\"></span>\n        </b-button>\n      </b-button-group>\n    </div>\n    <canvas id=\"place\" width=\"600\" height=\"400\"></canvas>\n  </div>\n</template>\n\n<script>\n\n  export default {\n    data() {\n      return {\n        nodes: 80,\n      }\n    },\n    mounted: function() {\n      this.draw();\n    },\n    methods: {\n\n      draw: function() { // {{{\n        const d3 = this.$d3;\n        //console.log(d3.voronoi());\n        var img = new Image;\n        img.src = \"https://raw.githubusercontent.com/asm-jaime/vue-d3-gallery/master/docs/harold.jpg\";\n\n        var canvas = d3.select(\"canvas\").on(\"touchmove mousemove\", moved).node(),\n          context = canvas.getContext(\"2d\"),\n          width = canvas.width,\n          height = canvas.height;\n\n        var sites = d3.range(this.nodes)\n          .map(function(d) { return [Math.random() * width, Math.random() * height]; });\n\n        var voronoi = d3.voronoi()\n          .extent([[-1, -1], [width + 1, height + 1]]);\n\n        redraw();\n\n        function moved() {\n          sites[0] = d3.mouse(this);\n          redraw();\n        }\n\n        function redraw() {\n          var diagram = voronoi(sites),\n            links = diagram.links(),\n            polygons = diagram.polygons();\n\n\n          context.clearRect(0, 0, width, height);\n          context.beginPath();\n          drawCell(polygons[0]);\n          context.fillStyle = \"#f00\";\n          context.fill();\n\n          context.beginPath();\n          for (var i = 0, n = polygons.length; i < n; ++i){\n            drawCell(polygons[i]);\n          }\n          context.strokeStyle = \"#00f\";\n          context.stroke();\n        }\n\n        function drawCell(cell) {\n          context.save();\n          if (!cell) return false;\n          context.moveTo(cell[0][0], cell[0][1]);\n          for (var j = 1, m = cell.length; j < m; ++j) {\n            context.lineTo(cell[j][0], cell[j][1]);\n          }\n          context.closePath();\n          context.clip();\n          context.drawImage(img, cell[0][0] - 90, cell[0][1] - 115);\n          context.stroke();\n          context.restore();\n          return true;\n        }\n      }, // }}}\n\n      plusNode: function(){\n        this.nodes+=20;\n        this.draw();\n      },\n\n      minusNode: function(){\n        this.nodes-=20;\n        this.draw();\n      }\n    }\n  }\n  </script>\n\n  <style>\n  html,\n  body {\n  }\n  .main-panel {\n    width: 100%;\n    /*position: absolute;*/\n    z-index: 2;\n  }\n  </style>\n"],"sourceRoot":"webpack://"}]);
+	exports.push([module.id, "\nhtml,\nbody {\n}\n.main-panel {\n  width: 100%;\n  /*position: absolute;*/\n  z-index: 2;\n}\n", "", {"version":3,"sources":["/./src/components/page-yobanoi.vue?a4fca8a8"],"names":[],"mappings":";AAuGA;;CAEA;AACA;EACA,YAAA;EACA,uBAAA;EACA,WAAA;CACA","file":"page-yobanoi.vue","sourcesContent":["<template>\n  <div id=\"app\">\n    <div class=\"container\">\n      <h1>gallery</h1>\n      <b-button-group>\n        <b-button @click=\"minusNode\">\n          <span class=\"fa fa-minus\"></span>\n        </b-button>\n        <input type=\"text\" class=\"form-control input-number\" :value=\"nodes\" min=\"1\" max=\"100\">\n        <b-button @click=\"plusNode\">\n          <span class=\"fa fa-plus\"></span>\n        </b-button>\n      </b-button-group>\n    </div>\n    <canvas id=\"place\" width=\"600\" height=\"400\"></canvas>\n  </div>\n</template>\n\n<script>\n\n  export default {\n    data() {\n      return {\n        nodes: 80,\n      }\n    },\n    mounted: function() {\n      this.draw();\n    },\n    methods: {\n\n      draw: function() { // {{{\n        const d3 = this.$d3;\n        //console.log(d3.voronoi());\n        var img = new Image;\n        img.src = \"https://raw.githubusercontent.com/asm-jaime/vue-d3-gallery/master/docs/harold.jpg\";\n\n        var canvas = d3.select(\"canvas\").on(\"touchmove mousemove\", moved).node(),\n          context = canvas.getContext(\"2d\"),\n          width = canvas.width,\n          height = canvas.height;\n\n        var sites = d3.range(this.nodes)\n          .map(function(d) { return [Math.random() * width, Math.random() * height]; });\n\n        var voronoi = d3.voronoi()\n          .extent([[-1, -1], [width + 1, height + 1]]);\n\n        redraw();\n\n        function moved() {\n          sites[0] = d3.mouse(this);\n          redraw();\n        }\n\n        function redraw() {\n          var diagram = voronoi(sites),\n            links = diagram.links(),\n            polygons = diagram.polygons();\n\n\n          context.clearRect(0, 0, width, height);\n          context.beginPath();\n          drawCell(polygons[0]);\n\n          for (var i = 0, n = polygons.length; i < n; ++i){\n            context.save();\n            drawCell(polygons[i]);\n            context.clip();\n            context.drawImage(img, polygons[i].data[0]-64, polygons[i].data[1]-64);\n            context.stroke();\n            context.restore();\n          }\n          context.strokeStyle = \"#00f\";\n          context.stroke();\n        }\n\n        function drawCell(cell) {\n          if (!cell) return false;\n          context.beginPath();\n          context.moveTo(cell[0][0], cell[0][1]);\n          for (var j = 1, m = cell.length; j < m; ++j) {\n            context.lineTo(cell[j][0], cell[j][1]);\n          }\n          context.closePath();\n          return true;\n        }\n      }, // }}}\n\n      plusNode: function(){\n        this.nodes+=20;\n        this.draw();\n      },\n\n      minusNode: function(){\n        this.nodes-=20;\n        this.draw();\n      }\n    }\n  }\n  </script>\n\n  <style>\n  html,\n  body {\n  }\n  .main-panel {\n    width: 100%;\n    /*position: absolute;*/\n    z-index: 2;\n  }\n  </style>\n"],"sourceRoot":"webpack://"}]);
 	
 	// exports
 
@@ -26778,29 +26778,27 @@
 	        context.clearRect(0, 0, width, height);
 	        context.beginPath();
 	        drawCell(polygons[0]);
-	        context.fillStyle = "#f00";
-	        context.fill();
 	
-	        context.beginPath();
 	        for (var i = 0, n = polygons.length; i < n; ++i) {
+	          context.save();
 	          drawCell(polygons[i]);
+	          context.clip();
+	          context.drawImage(img, polygons[i].data[0] - 64, polygons[i].data[1] - 64);
+	          context.stroke();
+	          context.restore();
 	        }
 	        context.strokeStyle = "#00f";
 	        context.stroke();
 	      }
 	
 	      function drawCell(cell) {
-	        context.save();
 	        if (!cell) return false;
+	        context.beginPath();
 	        context.moveTo(cell[0][0], cell[0][1]);
 	        for (var j = 1, m = cell.length; j < m; ++j) {
 	          context.lineTo(cell[j][0], cell[j][1]);
 	        }
 	        context.closePath();
-	        context.clip();
-	        context.drawImage(img, cell[0][0] - 90, cell[0][1] - 115);
-	        context.stroke();
-	        context.restore();
 	        return true;
 	      }
 	    }, // }}}
