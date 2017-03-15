@@ -25835,7 +25835,7 @@
 	
 	
 	// module
-	exports.push([module.id, "\nhtml,\nbody {\n}\n.main-panel {\n  width: 100%;\n  /*position: absolute;*/\n  z-index: 2;\n}\n", "", {"version":3,"sources":["/./src/components/app.vue?8c57b686"],"names":[],"mappings":";AA+BA;;CAEA;AACA;EACA,YAAA;EACA,uBAAA;EACA,WAAA;CACA","file":"app.vue","sourcesContent":["<template>\n  <div id=\"app\">\n    <div class=\"main-panel\">\n      <b-navbar toggleable type=\"inverse\" variant=\"inverse\" class=\"dvi-navbar collapse\">\n        <b-collapse isNav id=\"nav_collapse\">\n          <b-nav isNavBar>\n            <router-link to=\"/\">\n              <b-nav-item>main</b-nav-item>\n            </router-link>\n            <router-link to=\"/circle\">\n              <b-nav-item>circle</b-nav-item>\n            </router-link>\n            <router-link to=\"/voronoi\">\n              <b-nav-item>voronoi</b-nav-item>\n            </router-link>\n          </b-nav>\n        </b-collapse>\n      </b-navbar>\n    </div>\n    <div class=\"container-fluid\">\n      <router-view class=\"view\"></router-view>\n    </div>\n  </div>\n</template>\n\n<script>\n  export default {\n  }\n  </script>\n\n  <style>\n  html,\n  body {\n  }\n  .main-panel {\n    width: 100%;\n    /*position: absolute;*/\n    z-index: 2;\n  }\n  </style>\n"],"sourceRoot":"webpack://"}]);
+	exports.push([module.id, "\nhtml,\nbody {\n}\n.main-panel {\n  width: 100%;\n  /*position: absolute;*/\n  z-index: 2;\n}\n", "", {"version":3,"sources":["/./src/components/app.vue?7d785fe0"],"names":[],"mappings":";AAkCA;;CAEA;AACA;EACA,YAAA;EACA,uBAAA;EACA,WAAA;CACA","file":"app.vue","sourcesContent":["<template>\n  <div id=\"app\">\n    <div class=\"main-panel\">\n      <b-navbar toggleable type=\"inverse\" variant=\"inverse\" class=\"dvi-navbar collapse\">\n        <b-collapse isNav id=\"nav_collapse\">\n          <b-nav isNavBar>\n            <router-link to=\"/\">\n              <b-nav-item>main</b-nav-item>\n            </router-link>\n            <router-link to=\"/circle\">\n              <b-nav-item>circle</b-nav-item>\n            </router-link>\n            <router-link to=\"/voronoi\">\n              <b-nav-item>voronoi</b-nav-item>\n            </router-link>\n            <router-link to=\"/yobanoi\">\n              <b-nav-item>yobanoi</b-nav-item>\n            </router-link>\n          </b-nav>\n        </b-collapse>\n      </b-navbar>\n    </div>\n    <div class=\"container-fluid\">\n      <router-view class=\"view\"></router-view>\n    </div>\n  </div>\n</template>\n\n<script>\n  export default {\n  }\n  </script>\n\n  <style>\n  html,\n  body {\n  }\n  .main-panel {\n    width: 100%;\n    /*position: absolute;*/\n    z-index: 2;\n  }\n  </style>\n"],"sourceRoot":"webpack://"}]);
 	
 	// exports
 
@@ -26152,6 +26152,9 @@
 	//
 	//
 	//
+	//
+	//
+	//
 	
 	exports.default = {};
 
@@ -26194,7 +26197,11 @@
 	    attrs: {
 	      "to": "/voronoi"
 	    }
-	  }, [_c('b-nav-item', [_vm._v("voronoi")])], 1)], 1)], 1)], 1)], 1), _vm._v(" "), _c('div', {
+	  }, [_c('b-nav-item', [_vm._v("voronoi")])], 1), _vm._v(" "), _c('router-link', {
+	    attrs: {
+	      "to": "/yobanoi"
+	    }
+	  }, [_c('b-nav-item', [_vm._v("yobanoi")])], 1)], 1)], 1)], 1)], 1), _vm._v(" "), _c('div', {
 	    staticClass: "container-fluid"
 	  }, [_c('router-view', {
 	    staticClass: "view"
@@ -26424,7 +26431,7 @@
 	
 	
 	// module
-	exports.push([module.id, "\nhtml,\nbody {\n}\n.main-panel {\n  width: 100%;\n  /*position: absolute;*/\n  z-index: 2;\n}\n", "", {"version":3,"sources":["/./src/components/page-voronoi.vue?1d74619a"],"names":[],"mappings":";AAqGA;;CAEA;AACA;EACA,YAAA;EACA,uBAAA;EACA,WAAA;CACA","file":"page-voronoi.vue","sourcesContent":["<template>\n  <div id=\"app\">\n    <h1>gallery</h1>\n    <b-button-group>\n      <b-button>\n        <span class=\"glyphicon glyphicon-minus\">-</span>\n      </b-button>\n      <input type=\"text\" class=\"form-control input-number\" value=\"10\" min=\"1\" max=\"100\">\n      <b-button>\n        <span class=\"glyphicon glyphicon-plus\"></span>\n      </b-button>\n    </b-button-group>\n    <canvas id=\"place\" width=\"600\" height=\"400\"></canvas>\n  </div>\n</template>\n\n<script>\n  export default {\n    mounted: function() {\n      const d3 = this.$d3;\n      console.log(d3.voronoi());\n      var canvas = d3.select(\"canvas\").on(\"touchmove mousemove\", moved).node(),\n        context = canvas.getContext(\"2d\"),\n        width = canvas.width,\n        height = canvas.height;\n\n      var sites = d3.range(100)\n        .map(function(d) { return [Math.random() * width, Math.random() * height]; });\n\n      var voronoi = d3.voronoi()\n        .extent([[-1, -1], [width + 1, height + 1]]);\n\n      var harold = new Image;\n      harold.src = \"harold.jpg\";\n\n      redraw();\n\n      function moved() {\n        sites[0] = d3.mouse(this);\n        redraw();\n      }\n\n      function redraw() {\n        var diagram = voronoi(sites),\n          links = diagram.links(),\n          polygons = diagram.polygons();\n\n\n        context.clearRect(0, 0, width, height);\n        context.beginPath();\n        drawCell(polygons[0]);\n        context.fillStyle = \"#f00\";\n        context.fill();\n\n        context.beginPath();\n        for (var i = 0, n = polygons.length; i < n; ++i) drawCell(polygons[i]);\n        context.strokeStyle = \"#000\";\n        context.stroke();\n\n        context.beginPath();\n        for (var i = 0, n = links.length; i < n; ++i) drawLink(links[i]);\n        context.strokeStyle = \"rgba(0,0,0,0.2)\";\n        context.stroke();\n\n        context.beginPath();\n        drawSite(sites[0]);\n        context.fillStyle = \"#fff\";\n        context.fill();\n\n        context.beginPath();\n        for (var i = 1, n = sites.length; i < n; ++i) drawSite(sites[i]);\n        context.fillStyle = \"#000\";\n        context.fill();\n        context.strokeStyle = \"#fff\";\n        context.stroke();\n      }\n\n      function drawSite(site) {\n        context.moveTo(site[0] + 2.5, site[1]);\n        context.arc(site[0], site[1], 2.5, 0, 2 * Math.PI, false);\n      }\n\n      function drawLink(link) {\n        context.moveTo(link.source[0], link.source[1]);\n        context.lineTo(link.target[0], link.target[1]);\n      }\n\n      function drawCell(cell) {\n        if (!cell) return false;\n        context.moveTo(cell[0][0], cell[0][1]);\n        for (var j = 1, m = cell.length; j < m; ++j) {\n          context.lineTo(cell[j][0], cell[j][1]);\n        }\n        context.closePath();\n        return true;\n      }\n    }\n  }\n  </script>\n\n  <style>\n  html,\n  body {\n  }\n  .main-panel {\n    width: 100%;\n    /*position: absolute;*/\n    z-index: 2;\n  }\n  </style>\n"],"sourceRoot":"webpack://"}]);
+	exports.push([module.id, "\nhtml,\nbody {\n}\n.main-panel {\n  width: 100%;\n  /*position: absolute;*/\n  z-index: 2;\n}\n", "", {"version":3,"sources":["/./src/components/page-voronoi.vue?f105f41e"],"names":[],"mappings":";AA0HA;;CAEA;AACA;EACA,YAAA;EACA,uBAAA;EACA,WAAA;CACA","file":"page-voronoi.vue","sourcesContent":["<template>\n  <div id=\"app\">\n    <div class=\"container\">\n      <h1>gallery</h1>\n      <b-button-group>\n        <b-button @click=\"minusNode\">\n          <span class=\"fa fa-minus\"></span>\n        </b-button>\n        <input type=\"text\" class=\"form-control input-number\" :value=\"nodes\" min=\"1\" max=\"100\">\n        <b-button @click=\"plusNode\">\n          <span class=\"fa fa-plus\"></span>\n        </b-button>\n      </b-button-group>\n    </div>\n    <canvas id=\"place\" width=\"600\" height=\"400\"></canvas>\n  </div>\n</template>\n\n<script>\n\n  export default {\n    data() {\n      return {\n        nodes: 80,\n      }\n    },\n    mounted: function() {\n      this.draw();\n    },\n    methods: {\n\n      draw: function() { // {{{\n        const d3 = this.$d3;\n        //console.log(d3.voronoi());\n        var canvas = d3.select(\"canvas\").on(\"touchmove mousemove\", moved).node(),\n          context = canvas.getContext(\"2d\"),\n          width = canvas.width,\n          height = canvas.height;\n\n        var sites = d3.range(this.nodes)\n          .map(function(d) { return [Math.random() * width, Math.random() * height]; });\n\n        var voronoi = d3.voronoi()\n          .extent([[-1, -1], [width + 1, height + 1]]);\n\n        redraw();\n\n        function moved() {\n          sites[0] = d3.mouse(this);\n          redraw();\n        }\n\n        function redraw() {\n          var diagram = voronoi(sites),\n            links = diagram.links(),\n            polygons = diagram.polygons();\n\n\n          context.clearRect(0, 0, width, height);\n          context.beginPath();\n          drawCell(polygons[0]);\n          context.fillStyle = \"#f00\";\n          context.fill();\n\n          context.beginPath();\n          for (var i = 0, n = polygons.length; i < n; ++i) drawCell(polygons[i]);\n          context.strokeStyle = \"#00f\";\n          context.stroke();\n\n          context.beginPath();\n          for (var i = 0, n = links.length; i < n; ++i) drawLink(links[i]);\n          context.strokeStyle = \"rgba(0,0,0,0.2)\";\n          context.stroke();\n\n          context.beginPath();\n          drawSite(sites[0]);\n          context.fillStyle = \"#fff\";\n          context.fill();\n\n          context.beginPath();\n          for (var i = 1, n = sites.length; i < n; ++i) drawSite(sites[i]);\n          context.fillStyle = \"#000\";\n          context.fill();\n          context.strokeStyle = \"#fff\";\n          context.stroke();\n        }\n\n        function drawSite(site) {\n          context.moveTo(site[0] + 2.5, site[1]);\n          context.arc(site[0], site[1], 2.5, 0, 2 * Math.PI, false);\n        }\n\n        function drawLink(link) {\n          context.moveTo(link.source[0], link.source[1]);\n          context.lineTo(link.target[0], link.target[1]);\n        }\n\n        function drawCell(cell) {\n          if (!cell) return false;\n          context.moveTo(cell[0][0], cell[0][1]);\n          for (var j = 1, m = cell.length; j < m; ++j) {\n            context.lineTo(cell[j][0], cell[j][1]);\n          }\n          context.closePath();\n          return true;\n        }\n      }, // }}}\n\n      plusNode: function(){\n        this.nodes+=20;\n        this.draw();\n      },\n\n      minusNode: function(){\n        this.nodes-=20;\n        this.draw();\n      }\n    }\n  }\n  </script>\n\n  <style>\n  html,\n  body {\n  }\n  .main-panel {\n    width: 100%;\n    /*position: absolute;*/\n    z-index: 2;\n  }\n  </style>\n"],"sourceRoot":"webpack://"}]);
 	
 	// exports
 
@@ -26454,87 +26461,110 @@
 	//
 	//
 	//
+	//
+	//
+	
 	
 	exports.default = {
+	  data: function data() {
+	    return {
+	      nodes: 80
+	    };
+	  },
+	
 	  mounted: function mounted() {
-	    var d3 = this.$d3;
-	    console.log(d3.voronoi());
-	    var canvas = d3.select("canvas").on("touchmove mousemove", moved).node(),
-	        context = canvas.getContext("2d"),
-	        width = canvas.width,
-	        height = canvas.height;
+	    this.draw();
+	  },
+	  methods: {
 	
-	    var sites = d3.range(100).map(function (d) {
-	      return [Math.random() * width, Math.random() * height];
-	    });
+	    draw: function draw() {
+	      // {{{
+	      var d3 = this.$d3;
+	      //console.log(d3.voronoi());
+	      var canvas = d3.select("canvas").on("touchmove mousemove", moved).node(),
+	          context = canvas.getContext("2d"),
+	          width = canvas.width,
+	          height = canvas.height;
 	
-	    var voronoi = d3.voronoi().extent([[-1, -1], [width + 1, height + 1]]);
+	      var sites = d3.range(this.nodes).map(function (d) {
+	        return [Math.random() * width, Math.random() * height];
+	      });
 	
-	    var harold = new Image();
-	    harold.src = "harold.jpg";
+	      var voronoi = d3.voronoi().extent([[-1, -1], [width + 1, height + 1]]);
 	
-	    redraw();
-	
-	    function moved() {
-	      sites[0] = d3.mouse(this);
 	      redraw();
-	    }
 	
-	    function redraw() {
-	      var diagram = voronoi(sites),
-	          links = diagram.links(),
-	          polygons = diagram.polygons();
-	
-	      context.clearRect(0, 0, width, height);
-	      context.beginPath();
-	      drawCell(polygons[0]);
-	      context.fillStyle = "#f00";
-	      context.fill();
-	
-	      context.beginPath();
-	      for (var i = 0, n = polygons.length; i < n; ++i) {
-	        drawCell(polygons[i]);
-	      }context.strokeStyle = "#000";
-	      context.stroke();
-	
-	      context.beginPath();
-	      for (var i = 0, n = links.length; i < n; ++i) {
-	        drawLink(links[i]);
-	      }context.strokeStyle = "rgba(0,0,0,0.2)";
-	      context.stroke();
-	
-	      context.beginPath();
-	      drawSite(sites[0]);
-	      context.fillStyle = "#fff";
-	      context.fill();
-	
-	      context.beginPath();
-	      for (var i = 1, n = sites.length; i < n; ++i) {
-	        drawSite(sites[i]);
-	      }context.fillStyle = "#000";
-	      context.fill();
-	      context.strokeStyle = "#fff";
-	      context.stroke();
-	    }
-	
-	    function drawSite(site) {
-	      context.moveTo(site[0] + 2.5, site[1]);
-	      context.arc(site[0], site[1], 2.5, 0, 2 * Math.PI, false);
-	    }
-	
-	    function drawLink(link) {
-	      context.moveTo(link.source[0], link.source[1]);
-	      context.lineTo(link.target[0], link.target[1]);
-	    }
-	
-	    function drawCell(cell) {
-	      if (!cell) return false;
-	      context.moveTo(cell[0][0], cell[0][1]);
-	      for (var j = 1, m = cell.length; j < m; ++j) {
-	        context.lineTo(cell[j][0], cell[j][1]);
+	      function moved() {
+	        sites[0] = d3.mouse(this);
+	        redraw();
 	      }
-	      context.closePath();
-	      return true;
+	
+	      function redraw() {
+	        var diagram = voronoi(sites),
+	            links = diagram.links(),
+	            polygons = diagram.polygons();
+	
+	        context.clearRect(0, 0, width, height);
+	        context.beginPath();
+	        drawCell(polygons[0]);
+	        context.fillStyle = "#f00";
+	        context.fill();
+	
+	        context.beginPath();
+	        for (var i = 0, n = polygons.length; i < n; ++i) {
+	          drawCell(polygons[i]);
+	        }context.strokeStyle = "#00f";
+	        context.stroke();
+	
+	        context.beginPath();
+	        for (var i = 0, n = links.length; i < n; ++i) {
+	          drawLink(links[i]);
+	        }context.strokeStyle = "rgba(0,0,0,0.2)";
+	        context.stroke();
+	
+	        context.beginPath();
+	        drawSite(sites[0]);
+	        context.fillStyle = "#fff";
+	        context.fill();
+	
+	        context.beginPath();
+	        for (var i = 1, n = sites.length; i < n; ++i) {
+	          drawSite(sites[i]);
+	        }context.fillStyle = "#000";
+	        context.fill();
+	        context.strokeStyle = "#fff";
+	        context.stroke();
+	      }
+	
+	      function drawSite(site) {
+	        context.moveTo(site[0] + 2.5, site[1]);
+	        context.arc(site[0], site[1], 2.5, 0, 2 * Math.PI, false);
+	      }
+	
+	      function drawLink(link) {
+	        context.moveTo(link.source[0], link.source[1]);
+	        context.lineTo(link.target[0], link.target[1]);
+	      }
+	
+	      function drawCell(cell) {
+	        if (!cell) return false;
+	        context.moveTo(cell[0][0], cell[0][1]);
+	        for (var j = 1, m = cell.length; j < m; ++j) {
+	          context.lineTo(cell[j][0], cell[j][1]);
+	        }
+	        context.closePath();
+	        return true;
+	      }
+	    }, // }}}
+	
+	    plusNode: function plusNode() {
+	      this.nodes += 20;
+	      this.draw();
+	    },
+	
+	    minusNode: function minusNode() {
+	      this.nodes -= 20;
+	      this.draw();
 	    }
 	  }
 	};
@@ -26548,25 +26578,37 @@
 	    attrs: {
 	      "id": "app"
 	    }
-	  }, [_c('h1', [_vm._v("gallery")]), _vm._v(" "), _c('b-button-group', [_c('b-button', [_c('span', {
-	    staticClass: "glyphicon glyphicon-minus"
-	  }, [_vm._v("-")])]), _vm._v(" "), _c('input', {
+	  }, [_c('div', {
+	    staticClass: "container"
+	  }, [_c('h1', [_vm._v("gallery")]), _vm._v(" "), _c('b-button-group', [_c('b-button', {
+	    on: {
+	      "click": _vm.minusNode
+	    }
+	  }, [_c('span', {
+	    staticClass: "fa fa-minus"
+	  })]), _vm._v(" "), _c('input', {
 	    staticClass: "form-control input-number",
 	    attrs: {
 	      "type": "text",
-	      "value": "10",
 	      "min": "1",
 	      "max": "100"
+	    },
+	    domProps: {
+	      "value": _vm.nodes
 	    }
-	  }), _vm._v(" "), _c('b-button', [_c('span', {
-	    staticClass: "glyphicon glyphicon-plus"
-	  })])], 1), _vm._v(" "), _c('canvas', {
+	  }), _vm._v(" "), _c('b-button', {
+	    on: {
+	      "click": _vm.plusNode
+	    }
+	  }, [_c('span', {
+	    staticClass: "fa fa-plus"
+	  })])], 1)], 1), _vm._v(" "), _c('canvas', {
 	    attrs: {
 	      "id": "place",
 	      "width": "600",
 	      "height": "400"
 	    }
-	  })], 1)
+	  })])
 	},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()
@@ -26657,7 +26699,7 @@
 	
 	
 	// module
-	exports.push([module.id, "\nhtml,\nbody {\n}\n.main-panel {\n  width: 100%;\n  /*position: absolute;*/\n  z-index: 2;\n}\n", "", {"version":3,"sources":["/./src/components/page-yobanoi.vue?16787780"],"names":[],"mappings":";AAsGA;;CAEA;AACA;EACA,YAAA;EACA,uBAAA;EACA,WAAA;CACA","file":"page-yobanoi.vue","sourcesContent":["<template>\n  <div id=\"app\">\n    <h1>gallery</h1>\n    <b-button-group>\n      <b-button>\n        <span class=\"glyphicon glyphicon-minus\">-</span>\n      </b-button>\n      <input type=\"text\" class=\"form-control input-number\" value=\"10\" min=\"1\" max=\"100\">\n      <b-button>\n        <span class=\"glyphicon glyphicon-plus\"></span>\n      </b-button>\n    </b-button-group>\n    <canvas id=\"place\" width=\"600\" height=\"400\"></canvas>\n  </div>\n</template>\n\n<script>\n\n  export default {\n    mounted: function() {\n      const d3 = this.$d3;\n      console.log(d3.voronoi());\n      var canvas = d3.select(\"canvas\").on(\"touchmove mousemove\", moved).node(),\n        context = canvas.getContext(\"2d\"),\n        width = canvas.width,\n        height = canvas.height;\n\n      var sites = d3.range(100)\n        .map(function(d) { return [Math.random() * width, Math.random() * height]; });\n\n      var voronoi = d3.voronoi()\n        .extent([[-1, -1], [width + 1, height + 1]]);\n\n      var harold = new Image;\n      harold.src = \"harold.jpg\";\n\n      redraw();\n\n      function moved() {\n        sites[0] = d3.mouse(this);\n        redraw();\n      }\n\n      function redraw() {\n        var diagram = voronoi(sites),\n          links = diagram.links(),\n          polygons = diagram.polygons();\n\n\n        context.clearRect(0, 0, width, height);\n        context.beginPath();\n        drawCell(polygons[0]);\n        context.fillStyle = \"#f00\";\n        context.fill();\n\n        context.beginPath();\n        for (var i = 0, n = polygons.length; i < n; ++i) drawCell(polygons[i]);\n        context.strokeStyle = \"#000\";\n        context.stroke();\n\n        context.beginPath();\n        for (var i = 0, n = links.length; i < n; ++i) drawLink(links[i]);\n        context.strokeStyle = \"rgba(0,0,0,0.2)\";\n        context.stroke();\n\n        context.beginPath();\n        drawSite(sites[0]);\n        context.fillStyle = \"#fff\";\n        context.fill();\n\n        context.beginPath();\n        for (var i = 1, n = sites.length; i < n; ++i) drawSite(sites[i]);\n        context.fillStyle = \"#000\";\n        context.fill();\n        context.strokeStyle = \"#fff\";\n        context.stroke();\n      }\n\n      function drawSite(site) {\n        context.moveTo(site[0] + 2.5, site[1]);\n        context.arc(site[0], site[1], 2.5, 0, 2 * Math.PI, false);\n      }\n\n      function drawLink(link) {\n        context.moveTo(link.source[0], link.source[1]);\n        context.lineTo(link.target[0], link.target[1]);\n      }\n\n      function drawCell(cell) {\n        if (!cell) return false;\n        context.moveTo(cell[0][0], cell[0][1]);\n        for (var j = 1, m = cell.length; j < m; ++j) {\n          context.lineTo(cell[j][0], cell[j][1]);\n        }\n        context.closePath();\n        return true;\n      }\n    }\n  }\n  </script>\n\n  <style>\n  html,\n  body {\n  }\n  .main-panel {\n    width: 100%;\n    /*position: absolute;*/\n    z-index: 2;\n  }\n  </style>\n"],"sourceRoot":"webpack://"}]);
+	exports.push([module.id, "\nhtml,\nbody {\n}\n.main-panel {\n  width: 100%;\n  /*position: absolute;*/\n  z-index: 2;\n}\n", "", {"version":3,"sources":["/./src/components/page-yobanoi.vue?579a80cc"],"names":[],"mappings":";AAyGA;;CAEA;AACA;EACA,YAAA;EACA,uBAAA;EACA,WAAA;CACA","file":"page-yobanoi.vue","sourcesContent":["<template>\n  <div id=\"app\">\n    <div class=\"container\">\n      <h1>gallery</h1>\n      <b-button-group>\n        <b-button @click=\"minusNode\">\n          <span class=\"fa fa-minus\"></span>\n        </b-button>\n        <input type=\"text\" class=\"form-control input-number\" :value=\"nodes\" min=\"1\" max=\"100\">\n        <b-button @click=\"plusNode\">\n          <span class=\"fa fa-plus\"></span>\n        </b-button>\n      </b-button-group>\n    </div>\n    <canvas id=\"place\" width=\"600\" height=\"400\"></canvas>\n  </div>\n</template>\n\n<script>\n\n  export default {\n    data() {\n      return {\n        nodes: 80,\n      }\n    },\n    mounted: function() {\n      this.draw();\n    },\n    methods: {\n\n      draw: function() { // {{{\n        const d3 = this.$d3;\n        //console.log(d3.voronoi());\n        var img = new Image;\n        img.src = \"harold.jpg\";\n\n        var canvas = d3.select(\"canvas\").on(\"touchmove mousemove\", moved).node(),\n          context = canvas.getContext(\"2d\"),\n          width = canvas.width,\n          height = canvas.height;\n\n        var sites = d3.range(this.nodes)\n          .map(function(d) { return [Math.random() * width, Math.random() * height]; });\n\n        var voronoi = d3.voronoi()\n          .extent([[-1, -1], [width + 1, height + 1]]);\n\n        redraw();\n\n        function moved() {\n          sites[0] = d3.mouse(this);\n          redraw();\n        }\n\n        function redraw() {\n          var diagram = voronoi(sites),\n            links = diagram.links(),\n            polygons = diagram.polygons();\n\n\n          context.clearRect(0, 0, width, height);\n          context.beginPath();\n          drawCell(polygons[0]);\n          context.fillStyle = \"#f00\";\n          context.fill();\n\n          context.beginPath();\n          for (var i = 0, n = polygons.length; i < n; ++i){\n            drawCell(polygons[i]);\n          }\n          context.strokeStyle = \"#00f\";\n          context.stroke();\n        }\n\n        function drawCell(cell) {\n          context.save();\n          if (!cell) return false;\n          context.moveTo(cell[0][0], cell[0][1]);\n          for (var j = 1, m = cell.length; j < m; ++j) {\n            context.lineTo(cell[j][0], cell[j][1]);\n          }\n          context.closePath();\n          context.clip();\n          context.drawImage(img, cell[0][0] - 90, cell[0][1] - 115);\n          context.stroke();\n          context.restore();\n          return true;\n        }\n      }, // }}}\n\n      plusNode: function(){\n        this.nodes+=20;\n        this.draw();\n      },\n\n      minusNode: function(){\n        this.nodes-=20;\n        this.draw();\n      }\n    }\n  }\n  </script>\n\n  <style>\n  html,\n  body {\n  }\n  .main-panel {\n    width: 100%;\n    /*position: absolute;*/\n    z-index: 2;\n  }\n  </style>\n"],"sourceRoot":"webpack://"}]);
 	
 	// exports
 
@@ -26687,88 +26729,90 @@
 	//
 	//
 	//
+	//
+	//
 	
 	
 	exports.default = {
+	  data: function data() {
+	    return {
+	      nodes: 80
+	    };
+	  },
+	
 	  mounted: function mounted() {
-	    var d3 = this.$d3;
-	    console.log(d3.voronoi());
-	    var canvas = d3.select("canvas").on("touchmove mousemove", moved).node(),
-	        context = canvas.getContext("2d"),
-	        width = canvas.width,
-	        height = canvas.height;
+	    this.draw();
+	  },
+	  methods: {
 	
-	    var sites = d3.range(100).map(function (d) {
-	      return [Math.random() * width, Math.random() * height];
-	    });
+	    draw: function draw() {
+	      // {{{
+	      var d3 = this.$d3;
+	      //console.log(d3.voronoi());
+	      var img = new Image();
+	      img.src = "harold.jpg";
 	
-	    var voronoi = d3.voronoi().extent([[-1, -1], [width + 1, height + 1]]);
+	      var canvas = d3.select("canvas").on("touchmove mousemove", moved).node(),
+	          context = canvas.getContext("2d"),
+	          width = canvas.width,
+	          height = canvas.height;
 	
-	    var harold = new Image();
-	    harold.src = "harold.jpg";
+	      var sites = d3.range(this.nodes).map(function (d) {
+	        return [Math.random() * width, Math.random() * height];
+	      });
 	
-	    redraw();
+	      var voronoi = d3.voronoi().extent([[-1, -1], [width + 1, height + 1]]);
 	
-	    function moved() {
-	      sites[0] = d3.mouse(this);
 	      redraw();
-	    }
 	
-	    function redraw() {
-	      var diagram = voronoi(sites),
-	          links = diagram.links(),
-	          polygons = diagram.polygons();
-	
-	      context.clearRect(0, 0, width, height);
-	      context.beginPath();
-	      drawCell(polygons[0]);
-	      context.fillStyle = "#f00";
-	      context.fill();
-	
-	      context.beginPath();
-	      for (var i = 0, n = polygons.length; i < n; ++i) {
-	        drawCell(polygons[i]);
-	      }context.strokeStyle = "#000";
-	      context.stroke();
-	
-	      context.beginPath();
-	      for (var i = 0, n = links.length; i < n; ++i) {
-	        drawLink(links[i]);
-	      }context.strokeStyle = "rgba(0,0,0,0.2)";
-	      context.stroke();
-	
-	      context.beginPath();
-	      drawSite(sites[0]);
-	      context.fillStyle = "#fff";
-	      context.fill();
-	
-	      context.beginPath();
-	      for (var i = 1, n = sites.length; i < n; ++i) {
-	        drawSite(sites[i]);
-	      }context.fillStyle = "#000";
-	      context.fill();
-	      context.strokeStyle = "#fff";
-	      context.stroke();
-	    }
-	
-	    function drawSite(site) {
-	      context.moveTo(site[0] + 2.5, site[1]);
-	      context.arc(site[0], site[1], 2.5, 0, 2 * Math.PI, false);
-	    }
-	
-	    function drawLink(link) {
-	      context.moveTo(link.source[0], link.source[1]);
-	      context.lineTo(link.target[0], link.target[1]);
-	    }
-	
-	    function drawCell(cell) {
-	      if (!cell) return false;
-	      context.moveTo(cell[0][0], cell[0][1]);
-	      for (var j = 1, m = cell.length; j < m; ++j) {
-	        context.lineTo(cell[j][0], cell[j][1]);
+	      function moved() {
+	        sites[0] = d3.mouse(this);
+	        redraw();
 	      }
-	      context.closePath();
-	      return true;
+	
+	      function redraw() {
+	        var diagram = voronoi(sites),
+	            links = diagram.links(),
+	            polygons = diagram.polygons();
+	
+	        context.clearRect(0, 0, width, height);
+	        context.beginPath();
+	        drawCell(polygons[0]);
+	        context.fillStyle = "#f00";
+	        context.fill();
+	
+	        context.beginPath();
+	        for (var i = 0, n = polygons.length; i < n; ++i) {
+	          drawCell(polygons[i]);
+	        }
+	        context.strokeStyle = "#00f";
+	        context.stroke();
+	      }
+	
+	      function drawCell(cell) {
+	        context.save();
+	        if (!cell) return false;
+	        context.moveTo(cell[0][0], cell[0][1]);
+	        for (var j = 1, m = cell.length; j < m; ++j) {
+	          context.lineTo(cell[j][0], cell[j][1]);
+	        }
+	        context.closePath();
+	        context.clip();
+	        context.drawImage(img, cell[0][0] - 90, cell[0][1] - 115);
+	        context.stroke();
+	        context.restore();
+	        return true;
+	      }
+	    }, // }}}
+	
+	    plusNode: function plusNode() {
+	      this.nodes += 20;
+	      this.draw();
+	    },
+	
+	    minusNode: function minusNode() {
+	      this.nodes -= 20;
+	      this.draw();
 	    }
 	  }
 	};
@@ -26782,25 +26826,37 @@
 	    attrs: {
 	      "id": "app"
 	    }
-	  }, [_c('h1', [_vm._v("gallery")]), _vm._v(" "), _c('b-button-group', [_c('b-button', [_c('span', {
-	    staticClass: "glyphicon glyphicon-minus"
-	  }, [_vm._v("-")])]), _vm._v(" "), _c('input', {
+	  }, [_c('div', {
+	    staticClass: "container"
+	  }, [_c('h1', [_vm._v("gallery")]), _vm._v(" "), _c('b-button-group', [_c('b-button', {
+	    on: {
+	      "click": _vm.minusNode
+	    }
+	  }, [_c('span', {
+	    staticClass: "fa fa-minus"
+	  })]), _vm._v(" "), _c('input', {
 	    staticClass: "form-control input-number",
 	    attrs: {
 	      "type": "text",
-	      "value": "10",
 	      "min": "1",
 	      "max": "100"
+	    },
+	    domProps: {
+	      "value": _vm.nodes
 	    }
-	  }), _vm._v(" "), _c('b-button', [_c('span', {
-	    staticClass: "glyphicon glyphicon-plus"
-	  })])], 1), _vm._v(" "), _c('canvas', {
+	  }), _vm._v(" "), _c('b-button', {
+	    on: {
+	      "click": _vm.plusNode
+	    }
+	  }, [_c('span', {
+	    staticClass: "fa fa-plus"
+	  })])], 1)], 1), _vm._v(" "), _c('canvas', {
 	    attrs: {
 	      "id": "place",
 	      "width": "600",
 	      "height": "400"
 	    }
-	  })], 1)
+	  })])
 	},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()
