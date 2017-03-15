@@ -16,6 +16,7 @@ const router = new VueRouter({
   mode: 'history',
   base: __dirname,
   routes: [
+    {path: '/', component: PageYobanoi},
     {path: '/circle', component: PageCircle},
     {path: '/voronoi', component: PageVoronoi},
     {path: '/yobanoi', component: PageYobanoi},

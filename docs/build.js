@@ -87,7 +87,7 @@
 	var router = new _vueRouter2.default({
 	  mode: 'history',
 	  base: __dirname,
-	  routes: [{ path: '/circle', component: _pageCircle2.default }, { path: '/voronoi', component: _pageVoronoi2.default }, { path: '/yobanoi', component: _pageYobanoi2.default }]
+	  routes: [{ path: '/', component: _pageYobanoi2.default }, { path: '/circle', component: _pageCircle2.default }, { path: '/voronoi', component: _pageVoronoi2.default }, { path: '/yobanoi', component: _pageYobanoi2.default }]
 	});
 	
 	console.log('app on start: ', router);
