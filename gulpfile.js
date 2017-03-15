@@ -9,8 +9,8 @@ var livereload = require('gulp-livereload');
 var exec = require('child_process').exec;
 
 gulp.task('clean:build', function() {
-  del('./public/build.js');
-  del('./public/build.map');
+  del('./public/build.js')
+  del('./public/build.map')
 })
 
 gulp.task('build', ['clean:build'], function() {
@@ -19,7 +19,7 @@ gulp.task('build', ['clean:build'], function() {
     .on('error', function handleError() {
       this.emit('end'); // Recover from errors
     })
-    .pipe(gulp.dest('./public'))
+    .pipe(gulp.dest('./'))
     .pipe(livereload());
 });
 

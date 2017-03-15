@@ -1,9 +1,5 @@
 var path = require('path')
-var vue = require('vue-loader')
 var webpack = require('webpack')
-var ExtractTextPlugin = require("extract-text-webpack-plugin")
-
-var cssLoader = ExtractTextPlugin.extract("style-loader", "css-loader")
 
 const productionURL = "http://localhost:8081"
 const developmentURL = "http://localhost:8081"
@@ -13,40 +9,40 @@ var URL = process.env.NODE_ENV === 'production' ? productionURL : developmentURL
 module.exports = {
   entry: './src/main.js',
   output: {
-    path: "./public",
-    publicPath: "/public/",
+    path: path.resolve(__dirname, './public'),
+    filename: 'public/build.js',
+    sourceMapFilename: 'public/build.map'
   },
-  plugins: [
-    new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery",
-      "window.jQuery": "jquery"
-    }),
-    new ExtractTextPlugin("build.css")
-  ],
+  resolveLoader: {
+    root: path.join(__dirname, 'node_modules'),
+  },
+  resolve: {
+    alias: {
+      //vue: 'vue/dist/vue.js'
+    }
+  },
   module: {
-    loaders: [
-    { test: /\.vue$/, loader: 'vue' },
-    { test: /\.js$/, exclude: /node_modules|vue\/src|vue-router\/|vue-loader\/|vue-hot-reload-api\//, loader: 'babel' },
-    { test: /\.css$/, loader: cssLoader },
-    { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' },
-    { test: /\.ttf$/,    loader: "file?mimetype=application/octet-stream" },
-    { test: /\.eot$/,    loader: "file" },
-    { test: /\.svg$/,    loader: "file?mimetype=image/svg+xml" },
-    { test: /\.woff$/, loader: "url-loader?limit=10000&mimetype=application/font-woff" },
-    { test: /\.woff2$/, loader: "url-loader?limit=10000&mimetype=application/font-woff2" }
-  ]
+    loaders: [{
+      test: /\.vue$/,
+      loader: 'vue'
+    }, {
+      test: /\.js$/,
+      loader: 'babel',
+      exclude: /node_modules/
+    }, {
+      test: /\.(png|jpg|gif|svg)$/,
+      loader: 'file',
+      query: {
+        name: '[name].[ext]?[hash]'
+      }
+    }]
   },
-  vue: {
-    loaders: {
-      css: ExtractTextPlugin.extract("css"),
-      stylus: ExtractTextPlugin.extract("css!stylus")
-    },
-    devtool: '#source-map',
-  }
+  devtool: '#eval-source-map',
 }
 
 if (process.env.NODE_ENV === 'production') {
+  module.exports.devtool = '#source-map'
+    // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
       API_URL: JSON.stringify(URL),
@@ -62,6 +58,7 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.optimize.OccurenceOrderPlugin()
   ])
 } else {
+  module.exports.devtool = '#source-map'
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
       API_URL: JSON.stringify(URL),
