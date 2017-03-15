@@ -33,7 +33,7 @@
         const d3 = this.$d3;
         //console.log(d3.voronoi());
         var img = new Image;
-        img.src = "harold.jpg";
+        img.src = "./harold.jpg";
 
         var canvas = d3.select("canvas").on("touchmove mousemove", moved).node(),
           context = canvas.getContext("2d"),
