@@ -1,18 +1,22 @@
 <template>
   <div id="app">
-    <div class="container">
-      <h1>gallery</h1>
-      <b-button-group>
-        <b-button @click="minusNode">
-          <span class="fa fa-minus"></span>
-        </b-button>
-        <input type="text" class="form-control input-number" :value="nodes" min="1" max="100">
-        <b-button @click="plusNode">
-          <span class="fa fa-plus"></span>
-        </b-button>
-      </b-button-group>
-    </div>
-    <canvas id="place" width="600" height="400"></canvas>
+
+   <b-button-group>
+     <b-button @click="minusNode">
+       <span class="fa fa-minus"></span>
+     </b-button>
+     <input class="form-control input-normal text-center col"
+            style="max-width: 80px;"
+       type="number"
+       :value="nodes"
+       :formatter="format"
+     ></input>
+     <b-button @click="plusNode">
+       <span class="fa fa-plus"></span>
+     </b-button>
+   </b-button-group>
+
+    <canvas class="map-voronoi" id="place"></canvas>
   </div>
 </template>
 

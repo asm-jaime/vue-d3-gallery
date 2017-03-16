@@ -6,7 +6,7 @@ import VueD3 from 'vue-d3'
 import App from './components/app.vue'
 import PageCircle from './components/page-circle.vue'
 import PageVoronoi from './components/page-voronoi.vue'
-import PageYobanoi from './components/page-yobanoi.vue'
+import PageImgVoronoi from './components/page-img-voronoi.vue'
 
 Vue.use(BootstrapVue);
 Vue.use(VueRouter)
@@ -16,10 +16,10 @@ const router = new VueRouter({
   mode: 'history',
   base: __dirname,
   routes: [
-    {path: '/', component: PageYobanoi},
+    {path: '/', component: PageVoronoi},
     {path: '/circle', component: PageCircle},
     {path: '/voronoi', component: PageVoronoi},
-    {path: '/yobanoi', component: PageYobanoi},
+    {path: '/img-voronoi', component: PageImgVoronoi},
   ]
 })
 

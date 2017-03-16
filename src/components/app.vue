@@ -13,8 +13,8 @@
             <router-link to="/voronoi">
               <b-nav-item>voronoi</b-nav-item>
             </router-link>
-            <router-link to="/yobanoi">
-              <b-nav-item>yobanoi</b-nav-item>
+            <router-link to="/img-voronoi">
+              <b-nav-item>img-voronoi</b-nav-item>
             </router-link>
           </b-nav>
         </b-collapse>
