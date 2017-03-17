@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 
-   <b-button-group>
+   <b-button-group style="position: absolute; z-index: 2">
      <b-button @click="minusNode">
        <span class="fa fa-minus"></span>
      </b-button>
@@ -25,21 +25,31 @@
   export default {
     data() {
       return {
-        nodes: 80,
+        nodes: 380,
       }
     },
+    ready: function () {
+    },
     mounted: function() {
+      window.addEventListener('resize', this.handleResize);
       this.draw();
     },
     methods: {
+      handleResize: function() {
+        this.draw();
+      },
 
       draw: function() { // {{{
         const d3 = this.$d3;
         //console.log(d3.voronoi());
-        var canvas = d3.select("canvas").on("touchmove mousemove", moved).node(),
-          context = canvas.getContext("2d"),
-          width = canvas.width,
-          height = canvas.height;
+        var canvas = d3.select("canvas").on("touchmove mousemove", moved).node();
+        var context = canvas.getContext("2d");
+
+        canvas.height = window.outerHeight - 100;
+        canvas.width = window.outerWidth - 30;
+
+        var width = canvas.width;
+        var height = canvas.height;
 
         var sites = d3.range(this.nodes)
           .map(function(d) { return [Math.random() * width, Math.random() * height]; });
@@ -131,5 +141,9 @@
     width: 100%;
     /*position: absolute;*/
     z-index: 2;
+  }
+  .map-voronoi{
+    z-index: 0;
+    position: absolute;
   }
   </style>
