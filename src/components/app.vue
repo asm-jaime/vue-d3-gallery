@@ -16,13 +16,17 @@
             <router-link to="/img-voronoi">
               <b-nav-item>img-voronoi</b-nav-item>
             </router-link>
+            <router-link to="/map">
+              <b-nav-item>map</b-nav-item>
+            </router-link>
+            <router-link to="/world-map">
+              <b-nav-item>world map</b-nav-item>
+            </router-link>
           </b-nav>
         </b-collapse>
       </b-navbar>
     </div>
-    <div class="container-fluid">
-      <router-view class="view"></router-view>
-    </div>
+  <router-view class="view"></router-view>
   </div>
 </template>
 
