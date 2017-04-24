@@ -8,6 +8,8 @@ import PageCircle from './components/page-circle.vue'
 import PageVoronoi from './components/page-voronoi.vue'
 import PageImgVoronoi from './components/page-img-voronoi.vue'
 import PageMap from './components/page-map.vue'
+import PageNMap from './components/page-nmap.vue'
+import PageOMap from './components/page-omap.vue'
 import PageWorldMap from './components/page-world-map.vue'
 
 Vue.use(BootstrapVue);
@@ -23,11 +25,14 @@ const router = new VueRouter({
     {path: '/voronoi', component: PageVoronoi},
     {path: '/img-voronoi', component: PageImgVoronoi},
     {path: '/map', component: PageMap},
+    {path: '/nmap', component: PageNMap},
+    {path: '/omap', component: PageOMap},
     {path: '/world-map', component: PageWorldMap},
   ]
-})
+});
 
 console.log('app on start: ', router);
+
 new Vue({
   el: '#app',
   router,

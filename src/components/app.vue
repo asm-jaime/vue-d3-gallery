@@ -19,6 +19,12 @@
             <router-link to="/map">
               <b-nav-item>map</b-nav-item>
             </router-link>
+            <router-link to="/nmap">
+              <b-nav-item>nmap</b-nav-item>
+            </router-link>
+            <router-link to="/omap">
+              <b-nav-item>omap</b-nav-item>
+            </router-link>
             <router-link to="/world-map">
               <b-nav-item>world map</b-nav-item>
             </router-link>
@@ -26,14 +32,14 @@
         </b-collapse>
       </b-navbar>
     </div>
-  <router-view class="view"></router-view>
+    <div><router-view class="view"></router-view></div>
   </div>
 </template>
 
 <script>
   export default {
   }
-  </script>
+</script>
 
   <style>
   html,

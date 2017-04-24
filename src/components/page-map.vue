@@ -1,5 +1,8 @@
 <template>
-  <div id="app"></div>
+  <div id="app">
+    <svg id="map">
+    </svg>
+  </div>
 </template>
 
 <script>
@@ -34,7 +37,7 @@
         var path = d3.geoPath()
             .projection(projection);
 
-        var svg = d3.select("#app").append("svg")
+        var svg = d3.select("#map")
             .attr("width", width)
             .attr("height", height);
 
