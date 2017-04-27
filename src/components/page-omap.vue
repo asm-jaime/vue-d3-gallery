@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <svg id="map">
-    </svg>
+    <svg id="map"></svg>
   </div>
 </template>
 
